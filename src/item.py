@@ -16,10 +16,10 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        self.__name = name
+        self.name = name
         self.price = price
         self.quantity = quantity
-        self.all.append(self)
+        Item.all.append(self)
 
     def calculate_total_price(self) -> float:
         """
@@ -33,29 +33,26 @@ class Item:
         """
         Применяет установленную скидку для конкретного товара.
         """
-        self.price = self.price * self.pay_rate
+        self.price *= self.pay_rate
 
     @property
     def name(self):
         return self.__name
 
     @name.setter
-    def name(self, name):
-        try:
-            if len(name) < 10:
-                self.__name = name
-        except Exception:
-            print('Длина наименования товара превышает 10 символов')
+    def name(self, new_name: str):
+        if len(new_name) > 10:
+            raise ValueError('Длина наименования товара превышает 10 символов')
+        self.__name = new_name
 
     @classmethod
     def instantiate_from_csv(cls):
-        all = []
-
-        with open('items.csv',  encoding='utf-8') as csv_file:
+        cls.all = []
+        with open('src/items.csv',  encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file)
             for row in reader:
                 item = cls(row['name'], row['price'], row['quantity'])
-                all.append(item)
+                cls.all.append(item)
 
     @staticmethod
     def string_to_number(str_number):

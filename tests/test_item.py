@@ -21,3 +21,8 @@ def test_apply_discount(item1):
 
 def test_all(item1):
     assert Item.all != []
+
+
+def test_name():
+    with pytest.raises(ValueError):
+        len('СуперСмартфон')
