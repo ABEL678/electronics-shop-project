@@ -19,7 +19,7 @@ def test_apply_discount(item1):
     assert item1.price == 8000.0
 
 
-def test_all(item1):
+def test_all():
     assert Item.all != []
 
 
