@@ -1,4 +1,5 @@
 import csv
+import os
 
 
 class Item:
@@ -54,8 +55,10 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         cls.all = []
-        with open('src/items.csv',  encoding='utf-8') as csv_file:
-            reader = csv.DictReader(csv_file)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        data = os.path.join(current_dir, 'items.csv')
+        with open(data, newline='') as file:
+            reader = csv.DictReader(file)
             for row in reader:
                 item = cls(row['name'], row['price'], row['quantity'])
                 cls.all.append(item)
