@@ -60,7 +60,7 @@ class Item:
         with open(data, newline='') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                item = cls(row[0], float(row[1]), int(row[2]))
+                item = cls(row['name'], float(row['price']), int(row['quantity']))
                 cls.all.append(item)
 
     @staticmethod
