@@ -23,9 +23,9 @@ def test_all(item1):
     assert Item.all != []
 
 
-def test_name():
-    with pytest.raises(ValueError):
-        len('СуперСмартфон Apple14')
+def test_name(item1):
+    with pytest.raises(Exception):
+        item1.name = "СуперСмартфонApple14"
 
 
 def test_instantiate_from_csv() -> None:

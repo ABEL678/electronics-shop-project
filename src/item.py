@@ -48,7 +48,7 @@ class Item:
     @name.setter
     def name(self, new_name: str):
         if len(new_name) > 10:
-            raise ValueError('Длина наименования товара превышает 10 символов')
+            raise Exception('Длина наименования товара превышает 10 символов')
         self.__name = new_name
 
     @classmethod
