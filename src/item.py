@@ -29,6 +29,8 @@ class Item:
         return f'{self.name}'
 
     def __add__(self, other):
+        if not isinstance(other, Item):
+            raise ValueError('Складывать можно только два объекта Item.')
         return self.quantity + other.quantity
 
     def calculate_total_price(self) -> float:

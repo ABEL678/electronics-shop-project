@@ -16,6 +16,13 @@ class Phone(Item):
     def __str__(self):
         return f'{self.name}'
 
+    def __add__(self, other):
+        if not isinstance(other, Phone):
+            raise ValueError('Складывать можно только два объекта Phone.')
+        if not isinstance(other, Item):
+            raise ValueError('Складывать можно только два объекта Item, Phone.')
+        return self.quantity + other.quantity
+
     @property
     def number_of_sim(self):
         return self.__number_of_sim
