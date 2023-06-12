@@ -3,8 +3,8 @@ import os
 
 
 class InstantiateCSVError(Exception):
-    def __init__(self, *args, **kwargs):
-        self.message = args[-1] if args else 'Файл item.csv поврежден'
+    def __init__(self, message):
+        self.message = message
 
     def __str__(self):
         return self.message
@@ -68,19 +68,21 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         cls.all = []
-        current_dir = os.path.dirname(os.path.abspath(__file__))
         try:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
             data = os.path.join(current_dir, 'items.csv')
-        except FileNotFoundError:
-            print("Отсутствует файл item.csv")
-        except InstantiateCSVError as ex:
-            print(ex.message)
-        else:
             with open(data, newline='') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     item = cls(row['name'], float(row['price']), int(row['quantity']))
-                    cls.all.append(item)
+
+                    if not item:
+                        raise InstantiateCSVError('Файл item.csv поврежден')
+                    else:
+                        cls.all.append(item)
+
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
 
     @staticmethod
     def string_to_number(str_number):
